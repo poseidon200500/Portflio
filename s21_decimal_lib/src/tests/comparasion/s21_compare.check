@@ -1,0 +1,179 @@
+// 14354 > 4548
+#test compare_1
+{
+    s21_decimal dec, dec2;
+    null_decimal(&dec);
+    null_decimal(&dec2);
+    int number = 14354;
+    s21_from_int_to_decimal(number, &dec);
+    number = 4548;
+    s21_from_int_to_decimal(number, &dec2);
+    int compare = s21_compare(&dec, &dec2);
+    ck_assert_int_eq(compare, 1);
+}
+
+// 354 < 4548
+#test compare_2
+{
+    s21_decimal dec, dec2;
+    null_decimal(&dec);
+    null_decimal(&dec2);
+    int number = 354;
+    s21_from_int_to_decimal(number, &dec);
+    number = 4548;
+    s21_from_int_to_decimal(number, &dec2);
+    int compare = s21_compare(&dec, &dec2);
+    ck_assert_int_eq(compare, -1);
+}
+
+// 354 = 354
+#test compare_3
+{
+    s21_decimal dec, dec2;
+    null_decimal(&dec);
+    null_decimal(&dec2);
+    int number = 354;
+    s21_from_int_to_decimal(number, &dec);
+    number = 354;
+    s21_from_int_to_decimal(number, &dec2);
+    int compare = s21_compare(&dec, &dec2);
+    ck_assert_int_eq(compare, 0);
+}
+
+// -354 < 54
+#test compare_4
+{
+    s21_decimal dec, dec2;
+    null_decimal(&dec);
+    null_decimal(&dec2);
+    int number = -354;
+    s21_from_int_to_decimal(number, &dec);
+    number = 54;
+    s21_from_int_to_decimal(number, &dec2);
+    int compare = s21_compare(&dec, &dec2);
+    ck_assert_int_eq(compare, -1);
+}
+
+// 354 > -1254
+#test compare_5
+{
+    s21_decimal dec, dec2;
+    null_decimal(&dec);
+    null_decimal(&dec2);
+    int number = 354;
+    s21_from_int_to_decimal(number, &dec);
+    number = -1254;
+    s21_from_int_to_decimal(number, &dec2);
+    int compare = s21_compare(&dec, &dec2);
+    ck_assert_int_eq(compare, 1);
+}
+
+// -354 = -354
+#test compare_6
+{
+    s21_decimal dec, dec2;
+    null_decimal(&dec);
+    null_decimal(&dec2);
+    int number = -354;
+    s21_from_int_to_decimal(number, &dec);
+    number = -354;
+    s21_from_int_to_decimal(number, &dec2);
+    int compare = s21_compare(&dec, &dec2);
+    ck_assert_int_eq(compare, 0);
+}
+
+// -35.4 = -35.4
+#test compare_7
+{
+    s21_decimal dec, dec2;
+    null_decimal(&dec);
+    null_decimal(&dec2);
+    int number = -354;
+    s21_from_int_to_decimal(number, &dec);
+    set_scale(&dec, 1);
+    number = -354;
+    s21_from_int_to_decimal(number, &dec2);
+    set_scale(&dec2, 1);
+    int compare = s21_compare(&dec, &dec2);
+    ck_assert_int_eq(compare, 0);
+}
+
+// 35.4 < 485.965
+#test compare_8
+{
+    s21_decimal dec, dec2;
+    null_decimal(&dec);
+    null_decimal(&dec2);
+    int number = 354;
+    s21_from_int_to_decimal(number, &dec);
+    set_scale(&dec, 1);
+    number = 485965;
+    s21_from_int_to_decimal(number, &dec2);
+    set_scale(&dec2, 3);
+    int compare = s21_compare(&dec, &dec2);
+    ck_assert_int_eq(compare, -1);
+}
+
+// 35.4 > 4.85965
+#test compare_9
+{
+    s21_decimal dec, dec2;
+    null_decimal(&dec);
+    null_decimal(&dec2);
+    int number = 354;
+    s21_from_int_to_decimal(number, &dec);
+    set_scale(&dec, 1);
+    number = 485965;
+    s21_from_int_to_decimal(number, &dec2);
+    set_scale(&dec2, 5);
+    int compare = s21_compare(&dec, &dec2);
+    ck_assert_int_eq(compare, 1);
+}
+
+// 35.84 = 35.84
+#test compare_10
+{
+    s21_decimal dec, dec2;
+    null_decimal(&dec);
+    null_decimal(&dec2);
+    int number = 3584;
+    s21_from_int_to_decimal(number, &dec);
+    set_scale(&dec, 2);
+    number = 3584;
+    s21_from_int_to_decimal(number, &dec2);
+    set_scale(&dec2, 2);
+    int compare = s21_compare(&dec, &dec2);
+    ck_assert_int_eq(compare, 0);
+}
+
+// -35.84 < -3.84
+#test compare_11
+{
+    s21_decimal dec, dec2;
+    null_decimal(&dec);
+    null_decimal(&dec2);
+    int number = -3584;
+    s21_from_int_to_decimal(number, &dec);
+    set_scale(&dec, 2);
+    number = -384;
+    s21_from_int_to_decimal(number, &dec2);
+    set_scale(&dec2, 2);
+    int compare = s21_compare(&dec, &dec2);
+    ck_assert_int_eq(compare, -1);
+}
+
+// -35.84 > -113.84
+#test compare_12
+{
+    s21_decimal dec, dec2;
+    null_decimal(&dec);
+    null_decimal(&dec2);
+    int number = -3584;
+    s21_from_int_to_decimal(number, &dec);
+    set_scale(&dec, 2);
+    number = -11384;
+    s21_from_int_to_decimal(number, &dec2);
+    set_scale(&dec2, 2);
+    int compare = s21_compare(&dec, &dec2);
+    ck_assert_int_eq(compare, 1);
+}
